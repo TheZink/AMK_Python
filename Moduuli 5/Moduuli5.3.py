@@ -4,10 +4,15 @@
 #Toisaalta esimerkiksi luku 21 ei ole alkuluku, koska se voidaan jakaa tasan myös luvulla 3 tai luvulla 7.
 
 input1 = int(input("Anna luku: "))
+alkuluku = False
 
 for i in range(input1):
-    if input1 % i == 1:
-        print(f"Luku on jaollinen {i}")
-        continue
+    if input1 == i or input1 % 2 == 0 or input1 % 3 == 0:
+        alkuluku = False
     else:
-        print(i)
+        alkukulu = True
+
+if alkuluku is True:
+    print(f"{input1} on alkuluku")
+else:
+    print(f"{input1} ei ole alkuluku")
