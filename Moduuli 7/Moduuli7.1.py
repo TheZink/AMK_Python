@@ -7,4 +7,4 @@ syote = int(input("Anna luku: "))
 for vuodenajat, kuukaudet in kklista.items():
     for x in kuukaudet:
         if x == syote:
-            print(kuukaudet[x])
+            print(vuodenajat)
