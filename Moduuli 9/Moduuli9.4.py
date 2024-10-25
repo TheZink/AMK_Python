@@ -2,8 +2,6 @@ import random
 
 class Auto:
     
-    
-
     def __init__(self, rekisteri, huippu):
         self.rekisteri = rekisteri
         self.huippu = huippu
@@ -20,30 +18,47 @@ class Auto:
 
 
 def kilpailu():
-    kilpa_autot = {}
-    aika = 0
-    kaynnissa = True
+    auto_tiedot = {}
+    ajot = {}
+    sijoitus = 1
 
+    # Luodaan autot ja tallennetaan nämä listaan
     for tunnus in range(1,11):
         rekisteri = f"ABC-{tunnus}"
         huippu = random.randint(100,200)
-        kilpa_autot[rekisteri] = {'nopeus':huippu,'ajettu':0}
+        auto_tiedot[rekisteri] = huippu
+        ajot[rekisteri] = 0
         
-    while kaynnissa is True:
+    while True:
 
-        for rekisteri, tiedot in kilpa_autot.items():
+        # Puretaan autojen tiedot ja aloitetaan kilpailu
+        for auto, nopeus in auto_tiedot.items():
             nosto = random.randint(-10,15)
-            auto = Auto(rekisteri, tiedot['nopeus'])
-            auto.kiihdyta(nosto)
-            auto.kulje(1)
+            muutos = Auto(auto, nopeus)
+            muutos.kiihdyta(nosto)
+            muutos.kulje(1)
 
-            kilpa_autot[rekisteri]['ajettu'] += auto.kuljettu
-            print(kilpa_autot)
-
-            
-            if kilpa_autot[rekisteri]['ajettu'] >= 1000:
-                break
+            ajot[auto] += muutos.kuljettu
+        
+        # Tarkistetaan, onko sanakirjassa voittaja
+        if 1000 in ajot.values():
+            break
     
+    osallistujat = dict(sorted(ajot.items(),key=lambda item: item[1],reverse=True))
+    print()
+    print("="*66)
+    print()
+    for voittaja, matka in osallistujat.items():
+        print(f'\n{sijoitus}. {voittaja} auton huippunopeus on {auto_tiedot[voittaja]} ja oli ajanut {matka} kilometriä\n')
+        print("-"*66)
+        sijoitus += 1
+    print(f"\nKilpailun voittaja on {max(osallistujat.keys(),key=lambda item: item[1])}. Onnittelut voittajalle!\n")
+    print("="*66)
+    
+
+
+        
+
             
 
 
