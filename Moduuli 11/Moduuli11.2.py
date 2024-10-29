@@ -5,69 +5,46 @@ class Auto:
     def __init__(self, rekisteri, huippu):
         self.rekisteri = rekisteri
         self.huippu = huippu
-        self.nyky_nopeus = 0
         self.kuljettu = 0
+        self.kulutettu = 0
 
     def kiihdyta(self,nosto):
-        if nosto > 0:
-            if nosto < self.huippu:
-                self.nyky_nopeus = nosto
+        if nosto <= self.huippu:
+            self.nyky_nopeus = nosto
     
-    def kulje(self,tunti):
-        self.kuljettu += self.nyky_nopeus * tunti
+    def kulje(self,kulutus,nopeus,tunti):
+        self.kuljettu = nopeus * tunti
+        self.kulutettu = (kulutus/100) * self.kuljettu
 
+class Sahkoauto(Auto):
 
-def kilpailu():
-    auto_tiedot = {}
-    ajot = {}
-    sijoitus = 1
-
-    # Luodaan autot ja tallennetaan nämä listaan
-    for tunnus in range(1,11):
-        rekisteri = f"ABC-{tunnus}"
-        huippu = random.randint(100,200)
-        auto_tiedot[rekisteri] = huippu
-        ajot[rekisteri] = 0
-        
-    while True:
-
-        # Puretaan autojen tiedot ja aloitetaan kilpailu
-        for auto, nopeus in auto_tiedot.items():
-            nosto = random.randint(-10,15)
-            muutos = Auto(auto, nopeus)
-            muutos.kiihdyta(nosto)
-            muutos.kulje(1)
-
-            ajot[auto] += muutos.kuljettu
-        
-        # Tarkistetaan, onko sanakirjassa voittaja
-        if 1000 in ajot.values():
-            break
+    def __init__(self, rekisteri, huippu,kulutus,nopeus,aika):
+        super().__init__(rekisteri, huippu)
+        self.kulutus = kulutus
+        self.nopeus = nopeus
+        self.aika = aika
     
-    osallistujat = dict(sorted(ajot.items(),key=lambda item: item[1],reverse=True))
-    print()
-    print("="*66)
-    print()
-    for voittaja, matka in osallistujat.items():
-        print(f'\n{sijoitus}. {voittaja} auton huippunopeus on {auto_tiedot[voittaja]} ja oli ajanut {matka} kilometriä\n')
-        print("-"*66)
-        sijoitus += 1
-    print(f"\nKilpailun voittaja on {max(osallistujat.keys(),key=lambda item: item[1])}. Onnittelut voittajalle!\n")
-    print("="*66)
+    def aja(self):
+        self.kulje(self.kulutus,self.nopeus,self.aika)
+        print(f"Sähköauto rekisterinumerolla {self.rekisteri} ajoi {self.kuljettu} kilometriä ja kulutti {self.kulutettu:.2f} kWh")
+
+
+class Bensaauto(Auto):
+
+    def __init__(self, rekisteri, huippu,kulutus,nopeus,aika):
+        super().__init__(rekisteri, huippu)
+        self.kulutus = kulutus
+        self.nopeus = nopeus
+        self.aika = aika
     
+    def aja(self):
+        self.kulje(self.kulutus,self.nopeus,self.aika)
+        print(f"Bensa-auto rekisterinumerolla {self.rekisteri} ajoi {self.kuljettu} kilometriä ja kulutti {self.kulutettu:.2f} litraa")
 
 
-        
+autot = []
+autot.append(Sahkoauto("Sahko-1",180,52.5,150,5))
+autot.append(Bensaauto("Bensa-2",165,32.3,165,1))
 
-            
-
-
-
-kilpailu()
-        
-
-
-
-
-
-
+for auto in autot:
+    auto.aja()
