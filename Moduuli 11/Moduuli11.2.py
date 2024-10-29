@@ -1,5 +1,3 @@
-import random
-
 class Auto:
     
     def __init__(self, rekisteri, huippu):
@@ -26,7 +24,7 @@ class Sahkoauto(Auto):
     
     def aja(self):
         self.kulje(self.kulutus,self.nopeus,self.aika)
-        print(f"Sähköauto rekisterinumerolla {self.rekisteri} ajoi {self.kuljettu} kilometriä ja kulutti {self.kulutettu:.2f} kWh")
+        print(f"Sähköauto rekisterinumerolla {self.rekisteri} ajoi {self.kuljettu} kilometriä ja kulutti {self.kulutettu:.2f} kWh.")
 
 
 class Bensaauto(Auto):
@@ -39,12 +37,12 @@ class Bensaauto(Auto):
     
     def aja(self):
         self.kulje(self.kulutus,self.nopeus,self.aika)
-        print(f"Bensa-auto rekisterinumerolla {self.rekisteri} ajoi {self.kuljettu} kilometriä ja kulutti {self.kulutettu:.2f} litraa")
+        print(f"Bensa-auto rekisterinumerolla {self.rekisteri} ajoi {self.kuljettu} kilometriä ja kulutti {self.kulutettu:.2f} litraa.")
 
 
 autot = []
-autot.append(Sahkoauto("Sahko-1",180,52.5,150,5))
-autot.append(Bensaauto("Bensa-2",165,32.3,165,1))
+autot.append(Sahkoauto("Sahko-1",180,52.5,150,2))
+autot.append(Bensaauto("Bensa-2",165,32.3,165,5))
 
 for auto in autot:
     auto.aja()
