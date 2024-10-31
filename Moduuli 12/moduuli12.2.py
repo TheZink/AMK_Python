@@ -9,17 +9,17 @@ try:
     
     if status.status_code == 200:
         answer = status.json()
-        get_city = f"https://api.openweathermap.org/data/3.0/onecall?lat={answer[0]['lat']}&lon={answer[0]['lon']}&exclude={'current'}&appid={'35b3bc3ba3391714e7060d165ae93c52'}"
-        
+        get_city = f"https://api.openweathermap.org/data/2.5/weather?lat={answer[0]['lat']}&lon={answer[0]['lon']}&appid={'35b3bc3ba3391714e7060d165ae93c52'}&units{'metric'}"
+
         status_1 = requests.get(get_city)
-        print(get_city)
 
         try:
 
-            if status_1.status_code == 200:
+            if status_1.status_code == 200:               
                 city_temp = status_1.json()
-                print(city_temp)
-            else:
+                print(f"Kaupungissa {city_name} lämpötila on nyt {city_temp['main']['temp']-273.15:.1f} astetta. Lämpötila tuntuu kuin {city_temp['main']['feels_like']-273.15:.1f}")
+
+            else:   
                 print(status_1)
                 print("Ei voitu tulostaa lämpötila")
                 
@@ -34,6 +34,7 @@ try:
         print(f"Haku ei onnistunut. Status {status.status_code}")
 
 except requests.exceptions.RequestException as error:
+
     print("Ei voitu suorittaa pyyntöä")
     print()
     print(error)
